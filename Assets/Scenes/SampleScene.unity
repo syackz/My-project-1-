@@ -1117,7 +1117,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 458034190}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BukaPanelQuiz
+        m_MethodName: SiapScanQuiz
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2177,6 +2177,16 @@ MonoBehaviour:
   panelInfoTanaman: {fileID: 752038936}
   panelQuiz: {fileID: 1638272494}
   panelSerigala: {fileID: 14483401}
+  databaseQuiz: []
+  textPertanyaanQuiz: {fileID: 1730289458}
+  textTombolA: {fileID: 1403961198}
+  textTombolB: {fileID: 90521031}
+  databaseSerigala: []
+  textPertanyaanSerigala: {fileID: 25372185}
+  textTombolASerigala: {fileID: 1018806953}
+  textTombolBSerigala: {fileID: 749945702}
+  textNamaTanaman: {fileID: 1342650838}
+  textDeskripsiTanaman: {fileID: 0}
   panelNotif: {fileID: 1238118315}
   textNotif: {fileID: 1273219262}
 --- !u!4 &458034191
@@ -3171,7 +3181,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 458034190}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BukaPanelTanaman
+        m_MethodName: SiapScanTanaman
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3312,7 +3322,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: A
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &816964002
@@ -3446,7 +3456,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: B
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &879439010
@@ -3573,7 +3583,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 458034190}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BukaPanelSerigala
+        m_MethodName: SiapScanSerigala
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4864,7 +4874,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: B
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1259708269
@@ -4998,7 +5008,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: A
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1267042451
