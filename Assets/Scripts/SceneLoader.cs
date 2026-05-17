@@ -6,38 +6,38 @@ public class SceneLoader : MonoBehaviour
     public void LoadSampleScene()
     {
         ButtonSoundManager.PlayDefaultSound();
-        SceneManager.LoadScene("SampleScene");
+        SceneTransitionManager.Instance.TransitionToScene("SampleScene");
     }
 
     public void LoadScene(string sceneName)
     {
         ButtonSoundManager.PlayDefaultSound();
-        SceneManager.LoadScene(sceneName);
+        SceneTransitionManager.Instance.TransitionToScene(sceneName);
     }
 
     public void LoadARCardScan()
     {
         ButtonSoundManager.PlayDefaultSound();
-        SceneManager.LoadScene("ARCardScan");
+        SceneTransitionManager.Instance.TransitionToScene("ARCardScan");
     }
 
     public void LoadHOMEPAGE()
     {
         ButtonSoundManager.PlayDefaultSound();
-        SceneManager.LoadScene("HOMEPAGE");
+        SceneTransitionManager.Instance.TransitionToScene("HOMEPAGE");
     }
 
     public void LoadInstructionScene()
     {
         ButtonSoundManager.PlayDefaultSound();
         // Memuat scene petunjuk bermain
-        SceneManager.LoadScene("InstructionSceneAuto");
+        SceneTransitionManager.Instance.TransitionToScene("InstructionSceneAuto");
     }
 
     public void LoadCreditScene()
     {
         ButtonSoundManager.PlayDefaultSound();
         // Memuat scene credit pembuat
-        SceneManager.LoadScene("CreditScene");
+        SceneTransitionManager.Instance.TransitionToScene("CreditScene");
     }
 }

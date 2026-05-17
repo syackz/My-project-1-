@@ -48,14 +48,14 @@ public class InstructionController : MonoBehaviour
     {
         Debug.Log("Pindah ke scene HOMEPAGE...");
         PlayButtonClickSound(kembaliSound);
-        SceneManager.LoadScene("HOMEPAGE");
+        SceneTransitionManager.Instance.TransitionToScene("HOMEPAGE");
     }
 
     public void MulaiGame()
     {
         Debug.Log("Pindah ke scene SampleScene...");
         PlayButtonClickSound(mulaiSound);
-        SceneManager.LoadScene("SampleScene");
+        SceneTransitionManager.Instance.TransitionToScene("SampleScene");
     }
 
     // Fungsi kecocokan lama agar tidak ada error di scene jika ada reference tersisa
