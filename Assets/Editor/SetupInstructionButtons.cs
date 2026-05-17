@@ -34,51 +34,53 @@ public class SetupInstructionButtons : EditorWindow
             Debug.Log("➕ Menambahkan komponen 'ButtonSoundManager' ke Canvas.");
         }
 
-        // 3. Scan semua tombol di scene
+        // 3. Scan semua tombol di scene & deteksi berdasarkan tinggi posisinya (paling tinggi = Back, paling rendah = Get Started)
         Button[] allButtons = Resources.FindObjectsOfTypeAll<Button>();
-        Button foundBack = null;
-        Button foundStart = null;
+        System.Collections.Generic.List<Button> sceneButtons = new System.Collections.Generic.List<Button>();
 
         foreach (var btn in allButtons)
         {
-            // Pastikan hanya tombol di scene aktif (bukan asset prefab)
-            if (btn.gameObject.scene != scene) continue;
-
-            string nameLower = btn.gameObject.name.ToLower();
-
-            // Deteksi Tombol Back (Kembali)
-            if (nameLower.Contains("back") || nameLower.Contains("kembali") || nameLower.Contains("arrow") || nameLower.Contains("left"))
+            if (btn.gameObject.scene == scene)
             {
-                foundBack = btn;
-            }
-            // Deteksi Tombol Get Started
-            else if (nameLower.Contains("start") || nameLower.Contains("get") || nameLower.Contains("play") || nameLower.Contains("mulai"))
-            {
-                foundStart = btn;
+                sceneButtons.Add(btn);
             }
         }
 
-        // Jika tidak terdeteksi via nama, coba tebak via posisi di layar
-        if (foundBack == null || foundStart == null)
-        {
-            foreach (var btn in allButtons)
-            {
-                if (btn.gameObject.scene != scene) continue;
-                if (btn == foundBack || btn == foundStart) continue;
+        Button foundBack = null;
+        Button foundStart = null;
 
-                RectTransform rect = btn.GetComponent<RectTransform>();
-                if (rect != null)
+        if (sceneButtons.Count >= 2)
+        {
+            // Urutkan tombol berdasarkan tinggi posisi Y di world space (Descending: paling tinggi di indeks 0)
+            sceneButtons.Sort((a, b) =>
+            {
+                RectTransform rectA = a.GetComponent<RectTransform>();
+                RectTransform rectB = b.GetComponent<RectTransform>();
+                float yA = rectA != null ? rectA.position.y : 0f;
+                float yB = rectB != null ? rectB.position.y : 0f;
+                return yB.CompareTo(yA);
+            });
+
+            foundBack = sceneButtons[0]; // Tombol paling tinggi = Back (Kembali ke Homepage)
+            foundStart = sceneButtons[sceneButtons.Count - 1]; // Tombol paling rendah = Start (Mulai Game)
+
+            Debug.Log($"📊 [SmartHeightDetection] Mengidentifikasi {sceneButtons.Count} tombol berdasarkan tinggi posisinya:");
+            Debug.Log($"   🔼 Paling Atas (Back Button): '{foundBack.gameObject.name}'");
+            Debug.Log($"   🔽 Paling Bawah (Get Started Button): '{foundStart.gameObject.name}'");
+        }
+        else
+        {
+            // Fallback ke deteksi nama jika tombol kurang dari 2
+            foreach (var btn in sceneButtons)
+            {
+                string nameLower = btn.gameObject.name.ToLower();
+                if (nameLower.Contains("back") || nameLower.Contains("kembali") || nameLower.Contains("arrow") || nameLower.Contains("left"))
                 {
-                    // Tombol Back biasanya di pojok kiri atas (x negatif / kecil, y positif)
-                    if (rect.anchoredPosition.x < 0 && rect.anchoredPosition.y > 0 && foundBack == null)
-                    {
-                        foundBack = btn;
-                    }
-                    // Tombol Get Started biasanya di bawah tengah (y negatif / kecil)
-                    else if (rect.anchoredPosition.y < 0 && foundStart == null)
-                    {
-                        foundStart = btn;
-                    }
+                    foundBack = btn;
+                }
+                else if (nameLower.Contains("start") || nameLower.Contains("get") || nameLower.Contains("play") || nameLower.Contains("mulai"))
+                {
+                    foundStart = btn;
                 }
             }
         }
