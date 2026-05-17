@@ -22,4 +22,16 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("HOMEPAGE");
     }
+
+    public void LoadInstructionScene()
+    {
+        // Memuat scene petunjuk bermain
+        SceneManager.LoadScene("InstructionSceneAuto");
+    }
+
+    public void LoadCreditScene()
+    {
+        // Memuat scene credit pembuat
+        SceneManager.LoadScene("CreditScene");
+    }
 }
