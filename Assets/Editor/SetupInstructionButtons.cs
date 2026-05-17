@@ -124,6 +124,19 @@ public class SetupInstructionButtons : EditorWindow
             Debug.Log("➕ Menambahkan GraphicRaycaster ke Canvas.");
         }
 
+        // 6. Pastikan Camera memiliki AudioListener agar suara terdengar
+        Camera mainCam = Camera.main;
+        if (mainCam == null) mainCam = FindObjectOfType<Camera>();
+        if (mainCam != null)
+        {
+            if (mainCam.GetComponent<AudioListener>() == null)
+            {
+                mainCam.gameObject.AddComponent<AudioListener>();
+                Debug.Log("🔊 [Audio] Berhasil memasang AudioListener pada Kamera Utama agar suara tombol terdengar!");
+                EditorUtility.SetDirty(mainCam.gameObject);
+            }
+        }
+
         // Matikan raycast target pada tulisan di dalam tombol
         int fixedTextCount = 0;
         foreach (var btn in new Button[] { foundBack, foundStart })

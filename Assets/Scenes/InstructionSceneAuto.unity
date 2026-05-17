@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076d0a8c1e111f64b9b2a86b5462c9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultClickSound: {fileID: 0}
+  defaultClickSound: {fileID: 8300000, guid: dca3084cb66e8824bab682c584bec504, type: 3}
   customSounds:
   - targetButton: {fileID: 961922767}
     soundEffect: {fileID: 8300000, guid: 568470e29bef88c4aaa027db357be957, type: 3}

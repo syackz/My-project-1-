@@ -158,6 +158,25 @@ public class ButtonSoundManager : MonoBehaviour
     {
         if (clip != null)
         {
+            // Failsafe: Pastikan selalu ada AudioListener aktif di scene agar suara terdengar!
+            if (FindObjectOfType<AudioListener>() == null)
+            {
+                Camera cam = Camera.main;
+                if (cam == null) cam = FindObjectOfType<Camera>();
+                
+                if (cam != null)
+                {
+                    cam.gameObject.AddComponent<AudioListener>();
+                    Debug.Log("🔊 [Failsafe] Menambahkan AudioListener ke Kamera di scene agar suara tombol terdengar!");
+                }
+                else
+                {
+                    // Pasang di objek manager kita sendiri sebagai pilihan terakhir
+                    gameObject.AddComponent<AudioListener>();
+                    Debug.Log("🔊 [Failsafe] Menambahkan AudioListener ke ButtonSoundManager sebagai fallback terakhir!");
+                }
+            }
+
             GameObject tempAudioObj = new GameObject("TempAudio_" + clip.name);
             AudioSource tempSource = tempAudioObj.AddComponent<AudioSource>();
             tempSource.clip = clip;
