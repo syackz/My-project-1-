@@ -876,6 +876,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322857062}
   m_CullTransparentMesh: 1
+--- !u!1 &1425805809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1425805811}
+  - component: {fileID: 1425805810}
+  m_Layer: 0
+  m_Name: BackgroundMusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1425805810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425805809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78bd6d05953560c40be61e84ccd34059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetVolume: 0.35
+  fadeDuration: 1.2
+  defaultMusicClip: {fileID: 8300000, guid: 76adc3bada8ddff4bbd042635fed2f7d, type: 3}
+  sceneMusicList:
+  - sceneName: HOMEPAGE
+    musicClip: {fileID: 8300000, guid: 76adc3bada8ddff4bbd042635fed2f7d, type: 3}
+  - sceneName: InstructionSceneAuto
+    musicClip: {fileID: 8300000, guid: 67583b1df87740e41b2542fe351fd91d, type: 3}
+  - sceneName: CreditScene
+    musicClip: {fileID: 8300000, guid: 6996c6a6c942c7d4d9f2fb5ab5163fda, type: 3}
+  - sceneName: SampleScene
+    musicClip: {fileID: 8300000, guid: d25774535e9db5b4f8843bab04c3c3ad, type: 3}
+  - sceneName: ARCardScan
+    musicClip: {fileID: 8300000, guid: 67583b1df87740e41b2542fe351fd91d, type: 3}
+--- !u!4 &1425805811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425805809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1531167620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,21 +1092,21 @@ MonoBehaviour:
 
     <color=#B0C4DE>Lead Programmer & AR Specialist</color>
 
-    
+
 
     <b>Muhammad
     Zahran Rabbani</b>
 
     <color=#B0C4DE>Co-Programmer & Game Logic</color>
 
-    
+
 
     <b>Syabib
     Ibrahim Azkiya</b>
 
     <color=#B0C4DE>Game Support & Testing</color></size>
 
-    
+
 
     <voffset=20><color=#D4AF37><b><size=40>3D
     ASSET ATTRIBUTIONS</size></b></color></voffset>
@@ -1063,7 +1121,7 @@ MonoBehaviour:
 
     </color>
 
-    
+
 
     <b><link="https://skfb.ly/oD7WZ"><color=#62B6CB>"Peanut"</color></link></b>
 
@@ -1073,7 +1131,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/pzFrP"><color=#62B6CB>"Singkong
     / Cassava"</color></link></b>
@@ -1083,7 +1141,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/ptXrH"><color=#62B6CB>"Oil
     Fruit Palm"</color></link></b>
@@ -1093,7 +1151,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/ot6Vu"><color=#62B6CB>"Sugar
     Cane"</color></link></b>
@@ -1103,7 +1161,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/6CuwT"><color=#62B6CB>"Coffee
     Plant Sasha An"</color></link></b>
@@ -1113,7 +1171,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/6YMsB"><color=#62B6CB>"Cocoa
     Pod"</color></link></b>
@@ -1123,7 +1181,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/oHTZV"><color=#62B6CB>"Turmeric"</color></link></b>
 
@@ -1133,7 +1191,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
-    
+
 
     <b><link="https://skfb.ly/69w6x"><color=#62B6CB>"Werewolf"</color></link></b>
 
@@ -1145,7 +1203,7 @@ MonoBehaviour:
 
     </size>
 
-    
+
 
     <voffset=20><color=#D4AF37><b><size=40>POWERED
     BY</size></b></color></voffset>
@@ -1155,14 +1213,14 @@ MonoBehaviour:
     <color=#B0C4DE>AR
     Target Tracking & Image Detection</color>
 
-    
+
 
     <b>Unity Engine</b>
 
     <color=#B0C4DE>v2022
     / UI Canvas Systems</color></size>
 
-    
+
 
     <voffset=30><color=#A0E8AF><i>Thank
     you for playing!</i></color></voffset>
