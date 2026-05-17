@@ -118,9 +118,39 @@ public class ButtonSoundManager : MonoBehaviour
     // Fungsi statis yang bisa dipanggil dari script mana saja (mencegah suara terpotong saat pindah scene)
     public static void PlayDefaultSound()
     {
-        if (Instance != null && Instance.defaultClickSound != null)
+        if (Instance == null)
         {
-            Instance.PlaySound(Instance.defaultClickSound);
+            // Coba cari di scene terlebih dahulu
+            Instance = FindObjectOfType<ButtonSoundManager>();
+
+            if (Instance == null)
+            {
+                // Buat secara dinamis agar tidak pernah terjadi error NullReference
+                GameObject go = new GameObject("[Dynamic_ButtonSoundManager]");
+                Instance = go.AddComponent<ButtonSoundManager>();
+                DontDestroyOnLoad(go);
+                Debug.Log("🔊 ButtonSoundManager dibuat secara otomatis di background.");
+            }
+        }
+
+        if (Instance != null)
+        {
+            // Jika suara bawaan kosong, coba cari asset suara di editor
+#if UNITY_EDITOR
+            if (Instance.defaultClickSound == null)
+            {
+                Instance.AutoAssignDefaultSound();
+            }
+#endif
+
+            if (Instance.defaultClickSound != null)
+            {
+                Instance.PlaySound(Instance.defaultClickSound);
+            }
+            else
+            {
+                Debug.LogWarning("ButtonSoundManager: Mencoba memutar suara, tapi defaultClickSound kosong!");
+            }
         }
     }
 
@@ -143,4 +173,41 @@ public class ButtonSoundManager : MonoBehaviour
             Debug.LogWarning("ButtonSoundManager: Mencoba memutar suara, tapi AudioClip kosong!");
         }
     }
+
+#if UNITY_EDITOR
+    void Reset()
+    {
+        AutoAssignDefaultSound();
+    }
+
+    void OnValidate()
+    {
+        if (defaultClickSound == null)
+        {
+            AutoAssignDefaultSound();
+        }
+    }
+
+    private void AutoAssignDefaultSound()
+    {
+        // Cari audio clip konfirmasi menu RPG di Asset Database secara otomatis
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("RPG_Menu_Confirm_01 t:AudioClip");
+        if (guids == null || guids.Length == 0)
+        {
+            // Coba cari kata kunci confirm lain
+            guids = UnityEditor.AssetDatabase.FindAssets("Confirm t:AudioClip");
+        }
+
+        if (guids != null && guids.Length > 0)
+        {
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+            defaultClickSound = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            if (defaultClickSound != null)
+            {
+                Debug.Log($"[SoundManager] Sukses otomatis memasang sound effect '{defaultClickSound.name}'!");
+                UnityEditor.EditorUtility.SetDirty(this);
+            }
+        }
+    }
+#endif
 }
