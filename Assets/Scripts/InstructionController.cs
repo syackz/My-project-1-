@@ -41,12 +41,14 @@ public class InstructionController : MonoBehaviour
     public void BackToHomepage()
     {
         Debug.Log("Pindah ke scene HOMEPAGE...");
+        ButtonSoundManager.PlayDefaultSound();
         SceneManager.LoadScene("HOMEPAGE");
     }
 
     public void StartGame()
     {
         Debug.Log("Pindah ke scene SampleScene...");
+        ButtonSoundManager.PlayDefaultSound();
         SceneManager.LoadScene("SampleScene");
     }
 
