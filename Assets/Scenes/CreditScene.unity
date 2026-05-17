@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -665,7 +665,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1034,17 +1034,36 @@ MonoBehaviour:
 
     <color=#B0C4DE>Lead Programmer & AR Specialist</color>
 
+    
 
     <b>Muhammad
-    Zharan Rabbani</b>
+    Zahran Rabbani</b>
 
-    <color=#B0C4DE>Co-Programmer & Game Logic</color></size>
+    <color=#B0C4DE>Co-Programmer & Game Logic</color>
 
+    
+
+    <b>Syabib
+    Ibrahim Azkiya</b>
+
+    <color=#B0C4DE>Game Support & Testing</color></size>
+
+    
 
     <voffset=20><color=#D4AF37><b><size=40>3D
-    MODEL ATTRIBUTIONS</size></b></color></voffset>
+    ASSET ATTRIBUTIONS</size></b></color></voffset>
 
     <size=25>
+
+    <color=#B0C4DE>
+
+    Some
+    3D assets used in this project were obtained from free 3D asset libraries and
+    are licensed under Creative Commons Attribution (CC BY 4.0).
+
+    </color>
+
+    
 
     <b><link="https://skfb.ly/oD7WZ"><color=#62B6CB>"Peanut"</color></link></b>
 
@@ -1054,6 +1073,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/pzFrP"><color=#62B6CB>"Singkong
     / Cassava"</color></link></b>
@@ -1063,6 +1083,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/ptXrH"><color=#62B6CB>"Oil
     Fruit Palm"</color></link></b>
@@ -1072,6 +1093,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/ot6Vu"><color=#62B6CB>"Sugar
     Cane"</color></link></b>
@@ -1081,6 +1103,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/6CuwT"><color=#62B6CB>"Coffee
     Plant Sasha An"</color></link></b>
@@ -1090,6 +1113,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/6YMsB"><color=#62B6CB>"Cocoa
     Pod"</color></link></b>
@@ -1099,6 +1123,7 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
 
     <b><link="https://skfb.ly/oHTZV"><color=#62B6CB>"Turmeric"</color></link></b>
 
@@ -1108,8 +1133,19 @@ MonoBehaviour:
     <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
     Commons Attribution</color></link>
 
+    
+
+    <b><link="https://skfb.ly/69w6x"><color=#62B6CB>"Werewolf"</color></link></b>
+
+    by
+    VitSh is licensed under
+
+    <link="http://creativecommons.org/licenses/by/4.0/"><color=#A0E8AF>Creative
+    Commons Attribution</color></link>
+
     </size>
 
+    
 
     <voffset=20><color=#D4AF37><b><size=40>POWERED
     BY</size></b></color></voffset>
@@ -1119,12 +1155,14 @@ MonoBehaviour:
     <color=#B0C4DE>AR
     Target Tracking & Image Detection</color>
 
+    
 
     <b>Unity Engine</b>
 
     <color=#B0C4DE>v2022
     / UI Canvas Systems</color></size>
 
+    
 
     <voffset=30><color=#A0E8AF><i>Thank
     you for playing!</i></color></voffset>
@@ -1151,7 +1189,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
