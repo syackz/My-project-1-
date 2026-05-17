@@ -83,10 +83,11 @@ public class SetupInstructionButtons : EditorWindow
             }
         }
 
-        // 4. Masukkan referensi tombol ke Controller
+        // 4. Masukkan referensi tombol ke Controller & Bersihkan listener yang menumpuk / rusak
         if (foundBack != null)
         {
             controller.backButton = foundBack;
+            ClearPersistentListeners(foundBack);
             Debug.Log($"🎯 Berhasil mendeteksi Tombol Back: '{foundBack.gameObject.name}'");
             EditorUtility.SetDirty(controller);
         }
@@ -98,6 +99,7 @@ public class SetupInstructionButtons : EditorWindow
         if (foundStart != null)
         {
             controller.getStartedButton = foundStart;
+            ClearPersistentListeners(foundStart);
             Debug.Log($"🎯 Berhasil mendeteksi Tombol Get Started: '{foundStart.gameObject.name}'");
             EditorUtility.SetDirty(controller);
         }
@@ -147,5 +149,18 @@ public class SetupInstructionButtons : EditorWindow
         // Tandai scene telah berubah agar bisa di-save
         EditorSceneManager.MarkSceneDirty(scene);
         Debug.Log("✅ SETUP SELESAI! Silakan jalankan game!");
+    }
+
+    private static void ClearPersistentListeners(Button btn)
+    {
+        if (btn == null) return;
+        SerializedObject soBtn = new SerializedObject(btn);
+        SerializedProperty persistentCalls = soBtn.FindProperty("m_OnClick.m_PersistentCalls.m_Calls");
+        if (persistentCalls != null)
+        {
+            persistentCalls.ClearArray();
+            soBtn.ApplyModifiedProperties();
+            Debug.Log($"🧼 [Scrub] Membersihkan persistent click listeners pada tombol: '{btn.gameObject.name}'");
+        }
     }
 }
