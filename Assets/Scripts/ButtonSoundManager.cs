@@ -22,7 +22,7 @@ public class ButtonSoundManager : MonoBehaviour
     
     [Range(0f, 1f)]
     [Tooltip("Volume untuk efek suara tombol")]
-    public float sfxVolume = 0.15f;
+    public float sfxVolume = 0.6f;
     
     [Header("Suara Khusus per Tombol")]
     [Tooltip("Tambahkan elemen baru, lalu tarik objek tombol dan masukkan file suaranya")]

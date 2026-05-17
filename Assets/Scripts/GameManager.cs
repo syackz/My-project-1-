@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Volume Efek Suara")]
     [Range(0f, 1f)]
-    public float sfxVolume = 0.15f;
+    public float sfxVolume = 0.6f;
 
     private List<Player> players = new List<Player>();
     private int currentPlayerIndex = 0;
