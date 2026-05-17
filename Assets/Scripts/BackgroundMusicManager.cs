@@ -181,6 +181,16 @@ public class BackgroundMusicManager : MonoBehaviour
         fadeCoroutine = StartCoroutine(CrossfadeRoutine(newClip));
     }
 
+    private float GetTargetVolumeForActiveScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "SampleScene")
+        {
+            return 0.25f; // Di bawah 30% (misalnya 25% atau 0.25f)
+        }
+        return targetVolume;
+    }
+
     private IEnumerator CrossfadeRoutine(AudioClip newClip)
     {
         AudioSource activeSource = isSourceAActive ? audioSourceA : audioSourceB;
@@ -204,6 +214,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
         float elapsedTime = 0f;
         float startActiveVolume = activeSource.volume;
+        float currentTargetVolume = GetTargetVolumeForActiveScene();
 
         while (elapsedTime < fadeDuration)
         {
@@ -216,7 +227,7 @@ public class BackgroundMusicManager : MonoBehaviour
             // Fade in source tidak aktif
             if (newClip != null)
             {
-                inactiveSource.volume = Mathf.Lerp(0f, targetVolume, percent);
+                inactiveSource.volume = Mathf.Lerp(0f, currentTargetVolume, percent);
             }
 
             yield return null;
@@ -229,7 +240,7 @@ public class BackgroundMusicManager : MonoBehaviour
 
         if (newClip != null)
         {
-            inactiveSource.volume = targetVolume;
+            inactiveSource.volume = currentTargetVolume;
         }
 
         // Tukar status source aktif
