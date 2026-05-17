@@ -6606,7 +6606,7 @@ MonoBehaviour:
   soundSerigalaDitemukan: {fileID: 0}
   soundJawabanBenar: {fileID: 0}
   soundJawabanSalah: {fileID: 0}
-  sfxVolume: 0.15
+  sfxVolume: 0.6
 --- !u!4 &1367791267
 Transform:
   m_ObjectHideFlags: 0
@@ -6635,7 +6635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultClickSound: {fileID: 8300000, guid: dca3084cb66e8824bab682c584bec504, type: 3}
-  sfxVolume: 0.15
+  sfxVolume: 0.6
   customSounds:
   - targetButton: {fileID: 304870518}
     soundEffect: {fileID: 8300000, guid: 388c360750dfcd34eac2b0be237adf65, type: 3}
