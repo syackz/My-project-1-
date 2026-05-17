@@ -10,13 +10,19 @@ public class InstructionController : MonoBehaviour
     [Tooltip("Tarik tombol Get Started ke sini")]
     public Button getStartedButton;
 
+    [Header("Sound Effects Slot")]
+    [Tooltip("Slot audio untuk tombol Kembali")]
+    public AudioClip kembaliSound;
+    [Tooltip("Slot audio untuk tombol Get Started")]
+    public AudioClip mulaiSound;
+
     void Start()
     {
         // Hubungkan fungsi Klik ke Tombol Back
         if (backButton != null)
         {
             backButton.onClick.RemoveAllListeners();
-            backButton.onClick.AddListener(BackToHomepage);
+            backButton.onClick.AddListener(KembaliKeMenu);
         }
         else
         {
@@ -27,7 +33,7 @@ public class InstructionController : MonoBehaviour
         if (getStartedButton != null)
         {
             getStartedButton.onClick.RemoveAllListeners();
-            getStartedButton.onClick.AddListener(StartGame);
+            getStartedButton.onClick.AddListener(MulaiGame);
         }
         else
         {
@@ -38,18 +44,50 @@ public class InstructionController : MonoBehaviour
         EnsureUIRequirements();
     }
 
-    public void BackToHomepage()
+    public void KembaliKeMenu()
     {
         Debug.Log("Pindah ke scene HOMEPAGE...");
-        ButtonSoundManager.PlayDefaultSound();
+        PlayButtonClickSound(kembaliSound);
         SceneManager.LoadScene("HOMEPAGE");
+    }
+
+    public void MulaiGame()
+    {
+        Debug.Log("Pindah ke scene SampleScene...");
+        PlayButtonClickSound(mulaiSound);
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    // Fungsi kecocokan lama agar tidak ada error di scene jika ada reference tersisa
+    public void BackToHomepage()
+    {
+        KembaliKeMenu();
     }
 
     public void StartGame()
     {
-        Debug.Log("Pindah ke scene SampleScene...");
-        ButtonSoundManager.PlayDefaultSound();
-        SceneManager.LoadScene("SampleScene");
+        MulaiGame();
+    }
+
+    private void PlayButtonClickSound(AudioClip customClip)
+    {
+        if (customClip != null)
+        {
+            if (ButtonSoundManager.Instance != null)
+            {
+                ButtonSoundManager.Instance.PlaySound(customClip);
+            }
+            else
+            {
+                // Jika instance Singleton belum aktif, coba buat atau cari
+                ButtonSoundManager.PlayDefaultSound();
+            }
+        }
+        else
+        {
+            // Fallback ke suara default bawaan
+            ButtonSoundManager.PlayDefaultSound();
+        }
     }
 
     private void EnsureUIRequirements()
