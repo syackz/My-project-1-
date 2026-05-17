@@ -56,6 +56,16 @@ public class ButtonSoundManager : MonoBehaviour
         {
             // PENTING: Hanya hancurkan COMPONENT (this) ini saja, JANGAN hancurkan seluruh Game Object Canvas!
             Debug.Log("🔊 ButtonSoundManager duplikat terdeteksi. Menghancurkan komponen tambahan, bukan Canvas.");
+            
+            // Transfer konfigurasi khusus dari scene ini ke Instance agar tidak hilang
+            Instance.customSounds = this.customSounds != null ? new List<ButtonSoundSetup>(this.customSounds) : new List<ButtonSoundSetup>();
+            if (this.defaultClickSound != null)
+            {
+                Instance.defaultClickSound = this.defaultClickSound;
+            }
+            Instance.InitializeSoundDictionary();
+            Instance.BindAllButtonsInScene();
+            
             Destroy(this);
             return;
         }
@@ -87,6 +97,7 @@ public class ButtonSoundManager : MonoBehaviour
     private void InitializeSoundDictionary()
     {
         soundDictionary = new Dictionary<Button, AudioClip>();
+        if (customSounds == null) return;
         foreach (var custom in customSounds)
         {
             if (custom.targetButton != null && custom.soundEffect != null)
@@ -104,7 +115,7 @@ public class ButtonSoundManager : MonoBehaviour
         // Bersihkan dictionary lama (karena tombol di scene sebelumnya sudah hancur)
         InitializeSoundDictionary();
 
-        // Temukan semua tombol di scene yang aktif
+        // Temukan semua tombol di scene yang aktif/inaktif
         Button[] allButtons = Resources.FindObjectsOfTypeAll<Button>();
 
         foreach (Button btn in allButtons)
@@ -112,13 +123,14 @@ public class ButtonSoundManager : MonoBehaviour
             // Pastikan tombol berada di scene (bukan asset di project window)
             if (btn.gameObject.scene.IsValid() && btn.gameObject.scene.isLoaded)
             {
-                Button currentBtn = btn;
-                
-                // Hapus listener duplikat agar suara tidak dobel
-                currentBtn.onClick.RemoveListener(() => PlaySpecificSound(currentBtn));
-                
-                // Tambahkan listener suara
-                currentBtn.onClick.AddListener(() => PlaySpecificSound(currentBtn));
+                // Tambahkan atau dapatkan component helper untuk memutar suara secara bersih
+                ButtonSoundPlayer soundPlayer = btn.GetComponent<ButtonSoundPlayer>();
+                if (soundPlayer == null)
+                {
+                    soundPlayer = btn.gameObject.AddComponent<ButtonSoundPlayer>();
+                }
+                soundPlayer.button = btn;
+                soundPlayer.RegisterListener();
             }
         }
     }
@@ -249,4 +261,48 @@ public class ButtonSoundManager : MonoBehaviour
         }
     }
 #endif
+}
+
+public class ButtonSoundPlayer : MonoBehaviour
+{
+    public Button button;
+    private bool isRegistered = false;
+
+    public void RegisterListener()
+    {
+        if (button == null) button = GetComponent<Button>();
+        if (button != null && !isRegistered)
+        {
+            button.onClick.RemoveListener(PlaySound);
+            button.onClick.AddListener(PlaySound);
+            isRegistered = true;
+        }
+    }
+
+    public void UnregisterListener()
+    {
+        if (button != null)
+        {
+            button.onClick.RemoveListener(PlaySound);
+            isRegistered = false;
+        }
+    }
+
+    void OnEnable()
+    {
+        RegisterListener();
+    }
+
+    void OnDisable()
+    {
+        UnregisterListener();
+    }
+
+    void PlaySound()
+    {
+        if (ButtonSoundManager.Instance != null && button != null)
+        {
+            ButtonSoundManager.Instance.PlaySpecificSound(button);
+        }
+    }
 }
