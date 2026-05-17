@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -13,6 +14,8 @@ public class ButtonSoundSetup
 
 public class ButtonSoundManager : MonoBehaviour
 {
+    public static ButtonSoundManager Instance { get; private set; }
+
     [Header("Suara Bawaan (Default)")]
     [Tooltip("Suara standar yang dimainkan jika tombol tidak punya suara khusus")]
     public AudioClip defaultClickSound;
@@ -23,9 +26,46 @@ public class ButtonSoundManager : MonoBehaviour
 
     private Dictionary<Button, AudioClip> soundDictionary;
 
+    void Awake()
+    {
+        // Singleton pattern: pertahankan SoundManager di seluruh scene
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        InitializeSoundDictionary();
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     void Start()
     {
-        // Ubah List ke Dictionary berdasarkan referensi tombol agar pencarian cepat
+        BindAllButtonsInScene();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Setiap kali scene baru dimuat, otomatis scan dan pasang suara ke semua tombol baru!
+        BindAllButtonsInScene();
+    }
+
+    private void InitializeSoundDictionary()
+    {
         soundDictionary = new Dictionary<Button, AudioClip>();
         foreach (var custom in customSounds)
         {
@@ -37,15 +77,27 @@ public class ButtonSoundManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void BindAllButtonsInScene()
+    {
+        // Bersihkan dictionary lama (karena tombol di scene sebelumnya sudah hancur)
+        InitializeSoundDictionary();
+
+        // Temukan semua tombol di scene yang aktif
         Button[] allButtons = Resources.FindObjectsOfTypeAll<Button>();
 
         foreach (Button btn in allButtons)
         {
-            if (btn.gameObject.scene.IsValid())
+            // Pastikan tombol berada di scene (bukan asset di project window)
+            if (btn.gameObject.scene.IsValid() && btn.gameObject.scene.isLoaded)
             {
-                // Simpan referensi tombol ke variabel lokal untuk lambda event
-                Button currentBtn = btn; 
+                Button currentBtn = btn;
+                
+                // Hapus listener duplikat agar suara tidak dobel
+                currentBtn.onClick.RemoveListener(() => PlaySpecificSound(currentBtn));
+                
+                // Tambahkan listener suara
                 currentBtn.onClick.AddListener(() => PlaySpecificSound(currentBtn));
             }
         }
@@ -55,32 +107,126 @@ public class ButtonSoundManager : MonoBehaviour
     {
         AudioClip clipToPlay = defaultClickSound;
 
-        // Cek apakah tombol ini punya suara khusus yang didaftarkan
         if (soundDictionary != null && soundDictionary.ContainsKey(clickedButton))
         {
             clipToPlay = soundDictionary[clickedButton];
         }
 
-        // Mainkan suaranya
-        if (clipToPlay != null)
+        PlaySound(clipToPlay);
+    }
+
+    // Fungsi statis yang bisa dipanggil dari script mana saja (mencegah suara terpotong saat pindah scene)
+    public static void PlayDefaultSound()
+    {
+        if (Instance == null)
         {
-            // Bikin objek sementara khusus untuk memutar suara agar TIDAK TERPOTONG saat pindah scene
-            GameObject tempAudioObj = new GameObject("TempAudio_" + clipToPlay.name);
+            // Coba cari di scene terlebih dahulu
+            Instance = FindObjectOfType<ButtonSoundManager>();
+
+            if (Instance == null)
+            {
+                // Buat secara dinamis agar tidak pernah terjadi error NullReference
+                GameObject go = new GameObject("[Dynamic_ButtonSoundManager]");
+                Instance = go.AddComponent<ButtonSoundManager>();
+                DontDestroyOnLoad(go);
+                Debug.Log("🔊 ButtonSoundManager dibuat secara otomatis di background.");
+            }
+        }
+
+        if (Instance != null)
+        {
+            // Jika suara bawaan kosong, coba cari asset suara di editor
+#if UNITY_EDITOR
+            if (Instance.defaultClickSound == null)
+            {
+                Instance.AutoAssignDefaultSound();
+            }
+#endif
+
+            if (Instance.defaultClickSound != null)
+            {
+                Instance.PlaySound(Instance.defaultClickSound);
+            }
+            else
+            {
+                Debug.LogWarning("ButtonSoundManager: Mencoba memutar suara, tapi defaultClickSound kosong!");
+            }
+        }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            // Failsafe: Pastikan selalu ada AudioListener aktif di scene agar suara terdengar!
+            if (FindObjectOfType<AudioListener>() == null)
+            {
+                Camera cam = Camera.main;
+                if (cam == null) cam = FindObjectOfType<Camera>();
+                
+                if (cam != null)
+                {
+                    cam.gameObject.AddComponent<AudioListener>();
+                    Debug.Log("🔊 [Failsafe] Menambahkan AudioListener ke Kamera di scene agar suara tombol terdengar!");
+                }
+                else
+                {
+                    // Pasang di objek manager kita sendiri sebagai pilihan terakhir
+                    gameObject.AddComponent<AudioListener>();
+                    Debug.Log("🔊 [Failsafe] Menambahkan AudioListener ke ButtonSoundManager sebagai fallback terakhir!");
+                }
+            }
+
+            GameObject tempAudioObj = new GameObject("TempAudio_" + clip.name);
             AudioSource tempSource = tempAudioObj.AddComponent<AudioSource>();
-            tempSource.clip = clipToPlay;
+            tempSource.clip = clip;
             
-            // Pertahankan objek ini saat pindah scene
+            // Suara tetap hidup meskipun scene dihancurkan
             DontDestroyOnLoad(tempAudioObj);
-            
-            // Mainkan suaranya
             tempSource.Play();
             
-            // Hancurkan objek otomatis setelah durasi suaranya selesai
-            Destroy(tempAudioObj, clipToPlay.length);
+            Destroy(tempAudioObj, clip.length);
         }
         else
         {
-            Debug.LogWarning($"SoundManager: Tombol '{clickedButton.gameObject.name}' diklik, tapi belum ada suara (Default atau Khusus) yang dimasukkan!");
+            Debug.LogWarning("ButtonSoundManager: Mencoba memutar suara, tapi AudioClip kosong!");
         }
     }
+
+#if UNITY_EDITOR
+    void Reset()
+    {
+        AutoAssignDefaultSound();
+    }
+
+    void OnValidate()
+    {
+        if (defaultClickSound == null)
+        {
+            AutoAssignDefaultSound();
+        }
+    }
+
+    private void AutoAssignDefaultSound()
+    {
+        // Cari audio clip konfirmasi menu RPG di Asset Database secara otomatis
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("RPG_Menu_Confirm_01 t:AudioClip");
+        if (guids == null || guids.Length == 0)
+        {
+            // Coba cari kata kunci confirm lain
+            guids = UnityEditor.AssetDatabase.FindAssets("Confirm t:AudioClip");
+        }
+
+        if (guids != null && guids.Length > 0)
+        {
+            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
+            defaultClickSound = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            if (defaultClickSound != null)
+            {
+                Debug.Log($"[SoundManager] Sukses otomatis memasang sound effect '{defaultClickSound.name}'!");
+                UnityEditor.EditorUtility.SetDirty(this);
+            }
+        }
+    }
+#endif
 }
