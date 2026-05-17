@@ -5449,8 +5449,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.7122, y: 0.9416}
-  m_SizeDelta: {x: 154.58, y: 44.3501}
+  m_AnchoredPosition: {x: 2.7122, y: 11.558}
+  m_SizeDelta: {x: 154.58, y: 23.117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186374699
 MonoBehaviour:
@@ -5472,7 +5472,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kembali
+  m_text: x
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03b62b2ea48a5d14a9d4e4ff3c005e6a, type: 2}
   m_sharedMaterial: {fileID: -3374080140750128955, guid: 03b62b2ea48a5d14a9d4e4ff3c005e6a, type: 2}
@@ -5499,8 +5499,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6699,7 +6699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076d0a8c1e111f64b9b2a86b5462c9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 0}
+  defaultClickSound: {fileID: 0}
+  customSounds: []
 --- !u!1 &1408204337
 GameObject:
   m_ObjectHideFlags: 0
@@ -9826,8 +9827,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -100}
-  m_SizeDelta: {x: 160, y: 60}
+  m_AnchoredPosition: {x: 93.65161, y: -108.774414}
+  m_SizeDelta: {x: 137.3331, y: 97.5872}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973737798
 MonoBehaviour:
